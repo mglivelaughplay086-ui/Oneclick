@@ -3,6 +3,11 @@ const app = express();
 
 app.use(express.json());
 
+// Root route handler for homepage and health checks
+app.get('/', (req, res) => {
+    res.status(200).send('Digital Fulfillment Micro-service is live and operational!');
+});
+
 // Secure webhook endpoint to handle digital sales fulfillment
 app.post('/api/fulfill-order', (req, res) => {
     const { customerEmail, productName, downloadUrl } = req.body;
@@ -12,7 +17,7 @@ app.post('/api/fulfill-order', (req, res) => {
         return res.status(400).json({ error: 'Missing required customer or asset data.' });
     }
 
-    // Logic to dispatch secure access link (integrated with your mailing or delivery provider)
+    // Logic to dispatch secure access link
     console.log(`[FULFILLMENT SUCCESS] Dispatching ${productName} to ${customerEmail} via secure link: ${downloadUrl}`);
 
     // Return success response to payment gateway
